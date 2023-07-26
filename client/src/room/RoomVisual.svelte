@@ -25,7 +25,6 @@
 
     onMount(() => {
         io.on('room_status', (message) => {
-            console.log(message);
             if(message.message)
                 roomLog = [...roomLog, message.message];
             if(message.players){

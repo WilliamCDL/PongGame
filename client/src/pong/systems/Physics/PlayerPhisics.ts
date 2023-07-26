@@ -16,7 +16,6 @@ export const playerCollision = (block: Block, ball: Ball) => {
     if(direction.y > 0.8) {
         direction.y = 0.8;
     }
-    console.log(direction)
     direction.x = Math.sqrt(1 - (direction.y * direction.y));
 
     if(ball.position.x < block.position.x) {

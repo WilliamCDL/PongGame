@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
     
     username = newUserName;
     socket.nickname = newUserName;
-    console.log('a user connected: (' + newUserName + ')');
+  
 
     // When user enters the chat, send message to everyone
     io.emit('message', {
@@ -60,7 +60,6 @@ io.on('connection', (socket) => {
 
   // When user sends a message, send message to everyone
   socket.on('message', (message) => {
-    console.log('message: ' + message);
     io.emit('message', {
       username,
       message
@@ -78,7 +77,6 @@ io.on('connection', (socket) => {
 
   // When user creates a room, create room and send to everyone
   socket.on('create_room', (roomName) => {
-    console.log('create_room: ' + roomName + ' by ' + username);
     currentRoom = createRoom(roomName, username);
     socket.join(roomName);
     socket.emit('room_created', currentRoom);
@@ -142,9 +140,7 @@ io.on('connection', (socket) => {
 
   // Gameplay logic
   socket.on('start_game', (roomName) => {
-    console.log(roomName);
     let roster = Array.from(io.sockets.adapter.rooms.get(roomName));
-    console.log(roster);
 
     if (roster.length < 2) {
       socket.emit('room_status', {
@@ -157,11 +153,9 @@ io.on('connection', (socket) => {
     const socketIdLeft = roster[0];
     const socketIdRight = roster[1];
 
-    console.log(socketIdLeft);
-    console.log(socketIdRight);
 
     const room = getRoomByName(roomName);
-    console.log(room);
+
     room.status = RoomStatus.STARTED;
     room.players.left = io.sockets.sockets.get(socketIdLeft).nickname;
     room.players.right = io.sockets.sockets.get(socketIdRight).nickname;
@@ -199,20 +193,20 @@ io.on('connection', (socket) => {
       username: 'system',
       message: `${username} saiu da sala`
     });
-    console.log(`a user disconnected: (${username})`);
+
   })
 
 });
 
 server.listen(3000, () => {
-  console.log('listening on *:3000');
+
 });
 
 function leaveRoom(io, socket, roomName, username) {
   try {
-    console.log(roomName)
+
     const room = getRoomByName(roomName);
-    console.log(room)
+
     if (!room) return;
 
     if (room.owner === username) {
@@ -228,7 +222,6 @@ function leaveRoom(io, socket, roomName, username) {
       let roster = io.sockets.adapter.rooms.get(roomName);
       if (!roster) return;
 
-      console.log(roster);
 
       setTimeout(() => {
         roster.forEach((socketId) => {
@@ -270,6 +263,5 @@ function leaveRoom(io, socket, roomName, username) {
     })
 
   } catch (e) {
-    console.log(e);
   }
 }

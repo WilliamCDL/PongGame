@@ -16,7 +16,6 @@
         e.preventDefault();
 		if(select.value === 'default') return;
 
-		console.log(select.value);
 		dialog.close();
 		io.emit('join_room', select.value);
 	}

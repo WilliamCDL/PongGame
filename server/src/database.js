@@ -6,10 +6,8 @@ const DBSOURCE = "db.sqlite"
 let db = new sqlite3.Database(DBSOURCE, (err) => {
     if (err) {
       // Cannot open database
-      console.error(err.message)
       throw err
     }else{
-        console.log('Connected to the SQLite database.')
         db.run(`CREATE TABLE user (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username text UNIQUE, 
@@ -21,10 +19,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         (err) => {
             if (err) {
                 // Table already created
-                console.log("Tabela já existe")
             }else{
                 // Table just created, creating some rows
-                console.log("Criando fake users")
                 var insert = 'INSERT INTO user (username, email, password) VALUES (?,?,?)'
                 db.run(insert, ["admin","admin@example.com",md5("admin123456")])
                 db.run(insert, ["user","user@example.com",md5("user123456")])

@@ -34,29 +34,24 @@
 		io.on('room_created', (message) => {
 			status = PlayerRoomStatus.JOINED;
 			room = message;
-			console.log(status);
 		});
 
 		io.on('joined_room', (message) => {
 			status = PlayerRoomStatus.JOINED;
 			room = message;
-			console.log(status);
 		});
 
 		io.on('started', (message) => {
 			room = message;
-			console.log(status);
 			status = PlayerRoomStatus.STARTED;
 		});
 
 		io.on('finished', () => {
 			status = PlayerRoomStatus.FINISHED;
-			console.log(status);
 		});
 
 		io.on('left_room', () => {
 			status = PlayerRoomStatus.LOBBY;
-			console.log(status);
 		});
 
 		io.on('disconnect', () => {

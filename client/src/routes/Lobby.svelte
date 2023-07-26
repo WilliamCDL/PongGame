@@ -16,7 +16,6 @@
     onMount(() => {
         io.on('rooms', (message: Room[]) => {
             rooms = message;
-            console.log(rooms)
         })
 
         io.emit('get_rooms');
